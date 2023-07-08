@@ -1,0 +1,172 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model alumnos {
+  id_alumno     Int             @id @default(autoincrement())
+  usuario_id    Int?
+  peso          Float?          @db.Float
+  altura        Float?          @db.Float
+  IMC           Float?          @db.Float
+  usuarios      usuarios?       @relation(fields: [usuario_id], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "id_usuario")
+  asistencias   asistencias[]
+  inscripciones inscripciones[]
+  pagos         pagos[]
+
+  @@index([usuario_id], map: "id_usuario")
+}
+
+model asistencias {
+  id_asistencia Int       @id @default(autoincrement())
+  clases_id     Int?
+  alumno_id     Int?
+  fecha         DateTime? @db.Date
+  hora          DateTime? @db.Time(0)
+  alumnos       alumnos?  @relation(fields: [alumno_id], references: [id_alumno], onDelete: NoAction, onUpdate: NoAction, map: "id_alumno")
+  clases        clases?   @relation(fields: [clases_id], references: [id_clases], onDelete: NoAction, onUpdate: NoAction, map: "id_clases")
+
+  @@index([alumno_id], map: "id_alumno")
+  @@index([clases_id], map: "id_clases")
+}
+
+model clases {
+  id_clases       Int             @id @default(autoincrement())
+  sala_id         Int?
+  profe_id        Int?
+  nombre_clase_id Int?
+  valor           Float?          @db.Float
+  descripcion     String?         @db.VarChar(350)
+  hora            DateTime?       @db.Time(0)
+  fecha           DateTime?       @db.Date
+  asistencias     asistencias[]
+  profesores      profesores?     @relation(fields: [profe_id], references: [id_profe], onDelete: NoAction, onUpdate: NoAction, map: "N_profe")
+  salas           salas?          @relation(fields: [sala_id], references: [N_sala], onDelete: NoAction, onUpdate: NoAction, map: "N_sala")
+  nombre_clases   nombre_clases?  @relation(fields: [nombre_clase_id], references: [id_NC], onDelete: NoAction, onUpdate: NoAction, map: "nc_id")
+  inscripciones   inscripciones[]
+
+  @@index([profe_id], map: "N_profe")
+  @@index([sala_id], map: "N_sala")
+  @@index([nombre_clase_id], map: "nc_id")
+}
+
+model comunas {
+  id_comuna    Int           @id @default(autoincrement())
+  comuna       String?       @db.VarChar(45)
+  provincia_id Int?
+  provincias   provincias?   @relation(fields: [provincia_id], references: [id_provincia], onDelete: NoAction, onUpdate: NoAction, map: "provincia_id")
+  direcciones  direcciones[]
+
+  @@index([provincia_id], map: "provincia_id")
+}
+
+model direcciones {
+  id_direccion Int        @id @default(autoincrement())
+  comuna_id    Int?
+  calle        String?    @db.VarChar(45)
+  numero       String?    @db.VarChar(45)
+  comunas      comunas?   @relation(fields: [comuna_id], references: [id_comuna], onDelete: NoAction, onUpdate: NoAction, map: "ciudad_id")
+  usuarios     usuarios[]
+
+  @@index([comuna_id], map: "ciudad_id")
+}
+
+model inscripciones {
+  id_inscripciones Int       @id @default(autoincrement())
+  clases_id        Int?
+  alumno_id        Int?
+  hora             DateTime? @db.Time(0)
+  fecha            DateTime? @db.Date
+  alumnos          alumnos?  @relation(fields: [alumno_id], references: [id_alumno], onDelete: NoAction, onUpdate: NoAction, map: "N_alumno")
+  clases           clases?   @relation(fields: [clases_id], references: [id_clases], onDelete: NoAction, onUpdate: NoAction, map: "N_clases")
+  pagos            pagos[]
+
+  @@index([alumno_id], map: "N_alumno")
+  @@index([clases_id], map: "N_clases")
+}
+
+model nombre_clases {
+  id_NC  Int      @id @default(autoincrement())
+  nombre String?  @db.VarChar(45)
+  clases clases[]
+}
+
+model pagos {
+  id_pago       Int            @id @default(autoincrement())
+  incs_id       Int?
+  alumno_id     Int?
+  fecha         DateTime?      @db.Date
+  monto         Int?
+  tipo_pago     String?        @db.VarChar(15)
+  alumnos       alumnos?       @relation(fields: [alumno_id], references: [id_alumno], onDelete: NoAction, onUpdate: NoAction, map: "alumno_id")
+  inscripciones inscripciones? @relation(fields: [incs_id], references: [id_inscripciones], onDelete: NoAction, onUpdate: NoAction, map: "incs_id")
+
+  @@index([alumno_id], map: "alumno_id")
+  @@index([incs_id], map: "incs_id")
+}
+
+model profesores {
+  id_profe   Int       @id @default(autoincrement())
+  usuario_id Int?
+  clases     clases[]
+  usuarios   usuarios? @relation(fields: [usuario_id], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "N_usuario")
+
+  @@index([usuario_id], map: "N_usuario")
+}
+
+model provincias {
+  id_provincia Int       @id @default(autoincrement())
+  nombre       String?   @db.VarChar(45)
+  region_id    Int?
+  comunas      comunas[]
+  regiones     regiones? @relation(fields: [region_id], references: [id_region], onDelete: Cascade, map: "region_id")
+
+  @@index([region_id], map: "region_id")
+}
+
+model regiones {
+  id_region  Int          @id @default(autoincrement())
+  nombre     String?      @db.VarChar(45)
+  ordinal    String?      @db.VarChar(45)
+  provincias provincias[]
+}
+
+model salas {
+  N_sala   Int      @id @default(autoincrement())
+  cupo_min Int?
+  cupo_max Int?
+  clases   clases[]
+}
+
+model sugerencias {
+  id_sugerencia Int       @id @default(autoincrement())
+  usuario_id    Int?
+  comt          String?   @db.VarChar(250)
+  fecha         DateTime? @db.Date
+  hora          DateTime? @db.Time(0)
+  usuarios      usuarios? @relation(fields: [usuario_id], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "usuario_id")
+
+  @@index([usuario_id], map: "usuario_id")
+}
+
+model usuarios {
+  id_usuario   Int           @id @default(autoincrement())
+  direccion_id Int?
+  nombre       String?       @db.VarChar(45)
+  apellidoP    String?       @db.VarChar(45)
+  apellidoM    String?       @db.VarChar(45)
+  celular      String?       @db.VarChar(11)
+  correo       String?       @db.VarChar(45)
+  edad         Int?
+  password     String?       @db.VarChar(45)
+  alumnos      alumnos[]
+  profesores   profesores[]
+  sugerencias  sugerencias[]
+  direcciones  direcciones?  @relation(fields: [direccion_id], references: [id_direccion], onDelete: NoAction, onUpdate: NoAction, map: "N_dire")
+
+  @@index([direccion_id], map: "N_dire")
+}

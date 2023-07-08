@@ -1,0 +1,194 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>incio Sesion</title>
+    <link
+      href="/css/bootstrap.css"
+      rel='stylesheet'
+      type='text/css' />
+    <link
+      href="/css/style.css"
+      rel='stylesheet'
+      type='text/css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link
+      href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800'
+      rel='stylesheet'
+      type='text/css'>
+    <link
+      href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700'
+      rel='stylesheet'
+      type='text/css'>
+    <script type="application/x-javascript">
+      addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+    </script>
+    <script src="/js/jquery.min.js"></script>
+  </head>
+  <body>
+
+    <div class="header-bottom">
+      <div class="container">
+        <div class="social">
+          <ul>
+            <li class="facebook">
+              <a href="https://web.facebook.com/WorkoutCentroDeportivo/?locale=es_LA&_rdc=1&_rdr">
+                <span></span>
+              </a>
+            </li>
+
+            <li class="instagram">
+              <a href="https://www.instagram.com/workoutsanfelipe/">
+                <span></span>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+
+    {% include "./partials/menu.liquid" %}
+
+    <div class="main">
+      <div class="login_top">
+        <div class="container">
+          <div class="col-md-6">
+            <div class="login-page">
+              <h4 class="title">Crear Cuenta</h4>
+              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis</p>
+              <div class="button1">
+                <a href="registro"><input
+                    type="submit"
+                    name="Submit"
+                    value="Crear Cuenta"></a>
+              </div>
+              <div class="clear"></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="login-page">
+              <div class="login-title">
+                <h4 class="title">¿Tiene cuenta?</h4>
+                <div id="loginbox" class="loginbox">
+                  <form name="login" id="login-form">
+                    <fieldset class="input">
+                      <p id="login-form-username">
+                        <label for="modlgn_username">Email</label>
+                        <input
+                          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                          id="correo"
+                          type="text"
+                          name="correo"
+                          class="inputbox"
+                          size="18"
+                          autocomplete="off">
+                      </p>
+                      <p id="login-form-password">
+                        <label for="modlgn_passwd">Contraseña</label>
+                        <input
+                          id="password"
+                          type="password"
+                          name="password"
+                          class="inputbox"
+                          size="18"
+                          autocomplete="off">
+                      </p>
+                      <div class="remember">
+                        <p id="login-form-remember">
+                          <label for="modlgn_remember">
+                            <a href="#">Olvidaste tu contraseña ?
+                            </a>
+                          </label>
+                        </p>
+                        <input
+                          type="submit"
+                          name="submit"
+                          class="button"
+                          value="Iniciar sesion"><div class="clear"></div>
+                      </div>
+                    </fieldset>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--
+    <div class="footer-bottom">
+    <div class="container">
+    <div class="row section group">
+    <div class="col-md-4">
+    <h4 class="m_7">Suscribete</h4>
+    <form class="subscribe">
+    <input
+    type="text"
+    value="Escribe tu Email"
+    onfocus="this.value = '';"
+    onblur="if (this.value == '') {this.value = 'Escribe tu Email';}">
+    </form>
+    <div class="subscribe1">
+    <a href="#">Enviar Email<i class="but_arrow"></i>
+    </a>
+    </div>
+    </div>
+    <div class="col-md-4">
+    <div class="f-logo">
+    <img src="/images/logoooo.png" alt="" />
+    </div>
+
+    <p class="address">Phone :
+    <span class="m_10">+56 9 9296 5149</span>
+    </p>
+    </div>
+    <div class="col-md-4">
+    <ul class="list">
+    <h4 class="m_7">Menu</h4>
+    <li>
+    <a href="sobreNosotros">Sobre Nosotros</a>
+    </li>
+    <li>
+    <a href="horario">Horarios</a>
+    </li>
+    <li>
+    <a href="clases">Clases</a>
+    </li>
+    <li>
+    <a href="contacto">Contacto</a>
+    </li>
+    </ul>
+    </div>
+    <div class="clear"></div>
+    </div>
+    </div>
+    </div>
+    <div class="copyright">
+    <div class="container">
+    <div class="social">
+    <ul>
+    <li class="facebook">
+    <a href="https://web.facebook.com/WorkoutCentroDeportivo/?locale=es_LA&_rdc=1&_rdr">
+    <span></span>
+    </a>
+    </li>
+
+    <li class="instagram">
+    <a href="https://www.instagram.com/workoutsanfelipe/">
+    <span></span>
+    </a>
+    </li>
+    </ul>
+    </div>
+    <div class="clear"></div>
+    </div>
+    </div>
+    -->
+    {% include "./partials/footer.liquid" %}
+
+    <script src="/js/datos/signin.js"></script>
+  </body>
+</html>

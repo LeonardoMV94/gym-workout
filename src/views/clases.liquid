@@ -1,0 +1,288 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link
+      href="/css/bootstrap.css"
+      rel='stylesheet'
+      type='text/css' />
+    <link
+      href="/css/style.css"
+      rel='stylesheet'
+      type='text/css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link
+      href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800'
+      rel='stylesheet'
+      type='text/css'>
+    <link
+      href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700'
+      rel='stylesheet'
+      type='text/css'>
+    <script type="application/x-javascript">
+      addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+    </script>
+    <script src="/js/jquery.min.js"></script>
+
+    <script type="text/javascript" src="/js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="/js/jquery.contentcarousel.js"></script>
+
+    <link rel="stylesheet" href="/css/jquery-ui.css" />
+
+  </head>
+  <body>
+    <div class="header-bottom">
+      <div class="container">
+        <div class="social">
+          <ul>
+            <li class="facebook">
+              <a href="https://web.facebook.com/WorkoutCentroDeportivo/?locale=es_LA&_rdc=1&_rdr">
+                <span></span>
+              </a>
+            </li>
+
+            <li class="instagram">
+              <a href="https://www.instagram.com/workoutsanfelipe/">
+                <span></span>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+
+    {% include "./partials/menu.liquid" %}
+
+    <div class="main">
+      <div class="about_banner_img"><img
+          src="/images/class_img.jpg"
+          class="img-responsive"
+          alt="" /></div>
+      <div class="about_banner_wrap">
+        <h1 class="m_11">Clases</h1>
+      </div>
+      <div class="border"></div>
+      <div class="container">
+        <div class="classes_wrapper">
+          <div class="row class_box">
+
+            <!--  inicio del froeach de liquid     -->
+            <div class="col-md-6">
+              <div class="class_left">
+                <a href="clase_kickBoxing"><img
+                    src="/images/kickboxing.jpg"
+                    class="img-responsive"
+                    alt=""
+                    title="kick boxing"></a>
+              </div>
+              <div class="class_right">
+                <h3>Kick Boxing</h3>
+
+                <div class="class_img">
+                  <img src="/images/about_img3.jpg" alt="" />
+                  <div class="class_desc">
+                    <h4>Entrenador</h4>
+                    <h5>Jhon</h5>
+
+                  </div>
+                  <div class="clear"></div>
+                  <ul class="buttons_class">
+                    <li class="btn5">
+                      <a href="/clases/clase_kickBoxing">leer mas</a>
+                    </li>
+                    <li class="btn6">
+                      <a href="horario">Horario</a>
+                    </li>
+                    <div class="clear"></div>
+                  </ul>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <!--  fin del froeach de liquid     -->
+
+            <!--<div class="col-md-6">
+            <div class="class_left">
+            <a href="clase_cardio"><img
+            src="/images/cardioclass.jpg"
+            class="img-responsive"
+            alt=""
+            title="Cardio"></a>
+            </div>
+            <div class="class_right1">
+            <h3>Cardio</h3>
+
+            <div class="class_img">
+            <img src="/images/c10.jpg" alt="" />
+            <div class="class_desc1">
+            <h4>Entrenadora</h4>
+            <h5>Fernanda</h5>
+
+            </div>
+            <div class="clear"></div>
+            <ul class="buttons_class">
+            <li class="btn7">
+            <a href="clase_cardio">leer mas</a>
+            </li>
+            <li class="btn8">
+            <a href="horario">Horario</a>
+            </li>
+            <div class="clear"></div>
+            </ul>
+            </div>
+            </div>
+            </div>
+            <div class="clear"></div>
+            </div>
+
+            <div class="row class_box">
+            <div class="col-md-6">
+            <div class="class_left">
+            <a href="clase_boxeo"><img
+            src="/images/boxeoclass.jpg"
+            class="img-responsive"
+            alt=""
+            title="Boxeo"></a>
+            </div>
+            <div class="class_right">
+            <h3>Boxeo</h3>
+
+            <div class="class_img">
+            <img src="/images/boxeoentrenador.jpg" alt="" />
+            <div class="class_desc">
+            <h4>Entrenador</h4>
+            <h5>Felipe</h5>
+
+            </div>
+            <div class="clear"></div>
+            <ul class="buttons_class">
+            <li class="btn5">
+            <a href="clase_boxeo">leer mas</a>
+            </li>
+            <li class="btn6">
+            <a href="horario">Horario</a>
+            </li>
+            <div class="clear"></div>
+            </ul>
+            </div>
+            </div>
+            <div class="clear"></div>
+            </div>
+            <div class="col-md-6">
+            <div class="class_left">
+            <a href="clase_pilates"><img
+            src="/images/pilatesclass.jpg"
+            class="img-responsive"
+            alt=""
+            title="Pilates"></a>
+            </div>
+            <div class="class_right1">
+            <h3>Pilates</h3>
+
+            <div class="class_img">
+            <img src="/images/pic4.jpg" alt="" />
+            <div class="class_desc1">
+            <h4>Entrenadora</h4>
+            <h5>Samanta</h5>
+
+            </div>
+            <div class="clear"></div>
+            <ul class="buttons_class">
+            <li class="btn7">
+            <a href="clase_pilates">leer mas</a>
+            </li>
+            <li class="btn8">
+            <a href="horario">Horario</a>
+            </li>
+            <div class="clear"></div>
+            </ul>
+            </div>
+            </div>
+            </div>
+            <div class="clear"></div>
+            </div>
+
+            -->
+
+
+          </div>
+          <div class="clear"></div>
+        </div>
+        <!--
+        <div class="footer-bottom">
+        <div class="container">
+        <div class="row section group">
+        <div class="col-md-4">
+        <h4 class="m_7">Suscribete</h4>
+        <form class="subscribe">
+        <input
+        type="text"
+        value="Escribe tu Email"
+        onfocus="this.value = '';"
+        onblur="if (this.value == '') {this.value = 'Escribe tu Email';}">
+        </form>
+        <div class="subscribe1">
+        <a href="#">Enviar Email<i class="but_arrow"></i>
+        </a>
+        </div>
+        </div>
+        <div class="col-md-4">
+        <div class="f-logo">
+        <img src="/images/logoooo.png" alt="" />
+        </div>
+
+        <p class="address">Phone :
+        <span class="m_10">+56 9 9296 5149</span>
+        </p>
+        </div>
+        <div class="col-md-4">
+        <ul class="list">
+        <h4 class="m_7">Menu</h4>
+        <li>
+        <a href="sobreNosotros">Sobre Nosotros</a>
+        </li>
+        <li>
+        <a href="horario">Horarios</a>
+        </li>
+        <li>
+        <a href="clases">Clases</a>
+        </li>
+        <li>
+        <a href="contacto">Contacto</a>
+        </li>
+        </ul>
+        </div>
+        <div class="clear"></div>
+        </div>
+        </div>
+        </div>
+        <div class="copyright">
+        <div class="container">
+        <div class="social">
+        <ul>
+        <li class="facebook">
+        <a href="https://web.facebook.com/WorkoutCentroDeportivo/?locale=es_LA&_rdc=1&_rdr">
+        <span></span>
+        </a>
+        </li>
+
+        <li class="instagram">
+        <a href="https://www.instagram.com/workoutsanfelipe/">
+        <span></span>
+        </a>
+        </li>
+        </ul>
+        </div>
+        <div class="clear"></div>
+        </div>
+        </div>
+        -->
+        <!-- footer-->
+        {% include "./partials/footer.liquid" %}
+        <!-- footer-->
+      </body>
+    </body>
+  </body>
+</html>
