@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `WorkOut`.`usuarios` (
   `celular` VARCHAR(11) NULL,
   `correo` VARCHAR(45) NULL,
   `edad` INT NULL,
-  `password` VARCHAR(45) NULL,
+  `password` VARCHAR(254) NULL,
   PRIMARY KEY (`id_usuario`),
   CONSTRAINT `N_dire`
     FOREIGN KEY (`direccion_id`)
