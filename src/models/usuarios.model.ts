@@ -17,41 +17,47 @@ const getOneUsuario = async (correo: string, password: string) => {
     // obtiene la contraseña del usuario
     // select correo, password from usuarios where correo = correo
     // select password from usuarios where correo like 'marco@lskd.cl';
-    const usuarioPass: any  = await prisma.usuarios.findFirst({
-        where: {
-            correo: correo
-        },
-        select: {
-            password:true
-        }
-    })
-    // si no la encuentra retorna null
-    console.log( "usuarioPass:" + usuarioPass.password )
-    if(usuarioPass === null) return null
-
-
-    // compara la contraseña del usuario con la contraseña encriptada
-    const isLogin: boolean = await bcrypt.compare(password, usuarioPass.password)
-    console.log("BCrypt Match -> " + isLogin + " -> " + password + " -> " + usuarioPass.password )
-
-    // si es correcta retorna el usuario
-    // select correo, nombre, apellidoP, apellidoM from usuarios where correo like 'test@test.cl';
-    if (isLogin) {
-        const usuario = await prisma.usuarios.findFirst({
+    try {
+        const usuarioPass: any  = await prisma.usuarios.findFirst({
             where: {
                 correo: correo
             },
             select: {
-                correo: true,
-                nombre: true,
-                apellidoP: true,
-                apellidoM: true
+                password:true
             }
         })
-        return usuario
-    } else {
-        return null
+        // si no la encuentra retorna null
+        console.log( "usuarioPass:" + usuarioPass.password )
+        if(usuarioPass === null) return null
+    
+    
+        // compara la contraseña del usuario con la contraseña encriptada
+        const isLogin: boolean = await bcrypt.compare(password, usuarioPass.password)
+        console.log("BCrypt Match -> " + isLogin + " -> " + password + " -> " + usuarioPass.password )
+    
+        // si es correcta retorna el usuario
+        // select correo, nombre, apellidoP, apellidoM from usuarios where correo like 'test@test.cl';
+        if (isLogin) {
+            const usuario = await prisma.usuarios.findFirst({
+                where: {
+                    correo: correo
+                },
+                select: {
+                    correo: true,
+                    nombre: true,
+                    apellidoP: true,
+                    apellidoM: true
+                }
+            })
+            return usuario
+        } else {
+            return null
+        }
+    } catch (error) {
+        console.log("Error getOneUsuario: " + error)
+        return {}
     }
+    
 
     
 }

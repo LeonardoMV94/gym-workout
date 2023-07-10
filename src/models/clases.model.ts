@@ -1,4 +1,16 @@
+import { Prisma } from '@prisma/client'
 import { db as prisma } from '../utils/db.server'
+
+type clase = Prisma.clasesGetPayload<{
+    include: {
+        salas: true,
+        profesores: true,
+        nombre_clases: true,
+        horarios: true
+    }
+}>
+
+
 //obtiene todas las clases
 const getAllClases = async () => {
     try {
@@ -11,19 +23,26 @@ const getAllClases = async () => {
     }
 }
 //obtiene una unica clase
+
 const getOneClase = async (idClase: number) => {
     try {
-        const clase = await prisma.clases.findUnique({
+        const clase: clase | null = await prisma.clases.findUnique({
             where: {
                 id_clases: idClase
+            },
+            include: {
+                salas: true,
+                profesores: true,
+                nombre_clases: true,
+                horarios: true
             }
         })
         return clase
     } catch (error) {
         console.log("Error getOneClase: " + error)
-        return {}
+        return {} as clase
     }
-    
+
 }
 //Actualiza las clases
 const updateClases = async (id: any, clase: any) => {
@@ -43,7 +62,7 @@ const updateClases = async (id: any, clase: any) => {
         console.log("Error updateClases: " + error)
         return {}
     }
-    
+
 }
 //crea una clase
 const createClases = async (id: number, clase: any) => {
@@ -52,7 +71,7 @@ const createClases = async (id: number, clase: any) => {
         const crteClase = await prisma.clases.create({
             data: {
                 sala_id, profe_id, nombre_clase_id, valor, descripcion, horario_id, url_imagen
-    
+
             }, select: {
                 id_clases: true
             }
@@ -62,7 +81,7 @@ const createClases = async (id: number, clase: any) => {
         console.log("Error createClases: " + error)
         return {}
     }
-    
+
 }
 //elimina una clase
 const deleteClase = async (id: number) => {
@@ -80,7 +99,7 @@ const deleteClase = async (id: number) => {
         console.log("Error deleteClase: " + error)
         return {}
     }
-    
+
 }
 
 export {

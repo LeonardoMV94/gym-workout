@@ -91,7 +91,7 @@
                   <div class="clear"></div>
                   <ul class="buttons_class">
                     <li class="btn5">
-                      <a href="/clases/clase_kickBoxing">leer mas</a>
+                      <a href="/clases/1">leer mas</a>
                     </li>
                     <li class="btn6">
                       <a href="horario">Horario</a>
@@ -102,6 +102,10 @@
               </div>
               <div class="clear"></div>
             </div>
+
+            {% for clase in clases %}
+              {{ clase }}
+            {% endfor %}
             <!--  fin del froeach de liquid     -->
 
             <!--<div class="col-md-6">

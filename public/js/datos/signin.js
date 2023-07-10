@@ -11,6 +11,10 @@ document.getElementById("login-form").addEventListener("submit", async (event) =
 
     const datos = Object.fromEntries(formData);
     console.log("datos del formulario -> " + datos);
+    if (datos.correo.trim() == "" || datos.contraseña.trim() == "") {
+        alert("Favor de llenar todos los campos");
+        return;
+    }
 
     let response = await fetch("http://localhost:3000/login/inicio-sesion", {
         method: "POST",
