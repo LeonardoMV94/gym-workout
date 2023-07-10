@@ -1,12 +1,12 @@
 import express, { Request, Response } from "express";
-import { getAllClases,getOneClase} from '../models/clases.model';
+import { getAllClases, getOneClase } from '../models/clases.model';
 
 
 const router = express.Router()
 
 // obtener el modelo con crud
 
-router.get('/', async ( req: Request, res: Response) => {
+router.get('/', async (req: Request, res: Response) => {
     const clases = await getAllClases()
     res.render('clases', {
         title: 'Clases',
@@ -16,14 +16,14 @@ router.get('/', async ( req: Request, res: Response) => {
 
 // get one clase
 // localhost:3000/clases/1
-router.get('/:id', ( req: Request, res: Response) => {
-    // const id = parseInt(req.params.id)
-    // const clase = await getOneClase(id)
-    res.render('clasesDatalle')
-    // res.render('clasesDatalle', {
-    //     title: clase?.nombre_clases?.nombre ,
-    //     clase: clase
-    // })
+router.get('/:id', async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id)
+    const clase = await getOneClase(id)
+    console.log("clase-detalle ", clase)
+    res.render('detalle-clases', {
+        title: clase?.nombre_clases?.nombre,
+        clase: clase
+    })
 })
 
 // router.get('/clase_pilates', ( req: Request, res: Response) => {

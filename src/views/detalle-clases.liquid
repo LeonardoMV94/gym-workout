@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html>
   <head>
+    <title>{{ title }}</title>
     <link
       href="/css/bootstrap.css"
       rel='stylesheet'
@@ -63,27 +64,24 @@
           class="img-responsive"
           alt="" /></div>
       <div class="about_banner_wrap">
-        <h1 class="m_11">Clases de
-          <span class="class_1">boxeo</span>
-        </h1>
+        <h1 class="m_11">Clases de {{ clase.nombre_clases.nombre }}</h1>
       </div>
       <div class="border"></div>
       <div class="container">
         <div class="row single-top">
           <div class="col-md-8">
             <div class="single_class-left">
-              <img src="/images/boxeoclass.jpg" alt="" />
+              <img src="{{ clase.url_imagen   }}" alt="" />
               <div class="singe_desc">
-                <p>Los entrenamientos son clases colectivas en la que se enseñan movimientos propios del boxeo como el jab, directo, crochet, uppercut, hook, swing y diferentes tipos de esquivas, además de desplazamientos y posiciones de pies, caderas, cabeza y hombros.
-                </p>
+                <p>{{ clase.descripcion }}</p>
                 <ul class=single_grid>
                   <li class="grid1">
                     <h3 class="m_13">Entrenador</h3>
                     <img
-                      src="/images/boxeoentrenador.jpg"
+                      src="{{ clase.profesores.url_imagen }}"
                       class="img-responsive"
                       alt="" />
-                    <h4>Felipe<br><span class="m_text">Boxeo</span>
+                    <h4>{{ clase.profesores.usuarios.nombre }} {{ clase.profesores.usuarios.apellidoP }}<br><span class="m_text">{{ clase.nombre_clases.nombre }}</span>
                     </h4>
                     <p></p>
                   </li>

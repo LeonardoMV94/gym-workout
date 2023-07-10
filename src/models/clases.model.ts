@@ -32,7 +32,11 @@ const getOneClase = async (idClase: number) => {
             },
             include: {
                 salas: true,
-                profesores: true,
+                profesores: {
+                    include: {
+                       usuarios: true
+                    }
+                },
                 nombre_clases: true,
                 horarios: true
             }

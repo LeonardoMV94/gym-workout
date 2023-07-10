@@ -69,42 +69,43 @@
           <div class="row class_box">
 
             <!--  inicio del foreach de liquid     -->
-            <div class="col-md-6">
-              <div class="class_left">
-
-                <a href="clase_kickBoxing"><img
-                    src="/images/kickboxing.jpg"
-                    class="img-responsive"
-                    alt=""
-                    title="kick boxing"></a>
-              </div>
-              <div class="class_right">
-                <h3>Kick Boxing</h3>
-
-                <div class="class_img">
-                  <img src="/images/about_img3.jpg" alt="" />
-                  <div class="class_desc">
-                    <h4>Entrenador</h4>
-                    <h5>Jhon</h5>
-
-                  </div>
-                  <div class="clear"></div>
-                  <ul class="buttons_class">
-                    <li class="btn5">
-                      <a href="/clases/1">leer mas</a>
-                    </li>
-                    <li class="btn6">
-                      <a href="horario">Horario</a>
-                    </li>
-                    <div class="clear"></div>
-                  </ul>
-                </div>
-              </div>
-              <div class="clear"></div>
-            </div>
-
             {% for clase in clases %}
-              {{ clase }}
+              <div class="col-md-6">
+                <div class="class_left">
+
+                  <a href="#"><img
+                      src="{{ clase.url_imagen }}"
+                      class="img-responsive"
+                      alt=""
+                      title="kick boxing"></a>
+                </div>
+                <div class="class_right">
+                  <h3>{{ clase.nombre_clases.nombre }}</h3>
+
+                  <div class="class_img">
+                    <img src="{{ clase.profesores.url_imagen }}" alt="" />
+                    <div class="class_desc">
+                      <h4>Entrenador</h4>
+                      <h5>{{ clase.profesores.usuario_id }}</h5>
+
+                    </div>
+                    <div class="clear"></div>
+                    <ul class="buttons_class">
+                      <li class="btn5">
+                        <a href="/clases/{{ clase.id_clases }}">leer mas</a>
+                      </li>
+                      <li class="btn6">
+                        <a href="horario">Horario</a>
+                      </li>
+                      <div class="clear"></div>
+                    </ul>
+                  </div>
+                </div>
+                <div class="clear"></div>
+              </div>
+
+
+
             {% endfor %}
             <!--  fin del froeach de liquid     -->
 

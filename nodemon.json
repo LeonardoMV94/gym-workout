@@ -1,3 +1,4 @@
 {
-    "ext": "js,json,hbs"
+    "watch": ["src","prisma","views","public"],
+    "ext": "js,json,liquid"
 }
