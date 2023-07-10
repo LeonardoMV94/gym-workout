@@ -39,19 +39,21 @@ model clases {
   sala_id         Int?
   profe_id        Int?
   nombre_clase_id Int?
-  valor           Float?          @db.Float
-  descripcion     String?         @db.VarChar(350)
-  hora            DateTime?       @db.Time(0)
-  fecha           DateTime?       @db.Date
+  valor           Int
+  descripcion     String          @db.VarChar(350)
+  horario_id      Int
+  url_imagen      String          @db.VarChar(240)
   asistencias     asistencias[]
   profesores      profesores?     @relation(fields: [profe_id], references: [id_profe], onDelete: NoAction, onUpdate: NoAction, map: "N_profe")
   salas           salas?          @relation(fields: [sala_id], references: [N_sala], onDelete: NoAction, onUpdate: NoAction, map: "N_sala")
+  horarios        horarios        @relation(fields: [horario_id], references: [id_horario], onDelete: NoAction, onUpdate: NoAction, map: "horario_id")
   nombre_clases   nombre_clases?  @relation(fields: [nombre_clase_id], references: [id_NC], onDelete: NoAction, onUpdate: NoAction, map: "nc_id")
   inscripciones   inscripciones[]
 
   @@index([profe_id], map: "N_profe")
   @@index([sala_id], map: "N_sala")
   @@index([nombre_clase_id], map: "nc_id")
+  @@index([horario_id], map: "horario_id_idx")
 }
 
 model comunas {
@@ -79,8 +81,7 @@ model inscripciones {
   id_inscripciones Int       @id @default(autoincrement())
   clases_id        Int?
   alumno_id        Int?
-  hora             DateTime? @db.Time(0)
-  fecha            DateTime? @db.Date
+  fecha_ingreso    DateTime? @db.Date
   alumnos          alumnos?  @relation(fields: [alumno_id], references: [id_alumno], onDelete: NoAction, onUpdate: NoAction, map: "N_alumno")
   clases           clases?   @relation(fields: [clases_id], references: [id_clases], onDelete: NoAction, onUpdate: NoAction, map: "N_clases")
   pagos            pagos[]
@@ -112,6 +113,7 @@ model pagos {
 model profesores {
   id_profe   Int       @id @default(autoincrement())
   usuario_id Int?
+  url_imagen String    @db.VarChar(240)
   clases     clases[]
   usuarios   usuarios? @relation(fields: [usuario_id], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "N_usuario")
 
@@ -136,37 +138,56 @@ model regiones {
 }
 
 model salas {
-  N_sala   Int      @id @default(autoincrement())
-  cupo_min Int?
-  cupo_max Int?
-  clases   clases[]
+  N_sala      Int      @id @default(autoincrement())
+  cupo_min    Int?
+  cupo_max    Int?
+  numero_sala Int?
+  clases      clases[]
 }
 
 model sugerencias {
   id_sugerencia Int       @id @default(autoincrement())
   usuario_id    Int?
-  comt          String?   @db.VarChar(250)
+  comentario    String?   @db.VarChar(250)
   fecha         DateTime? @db.Date
-  hora          DateTime? @db.Time(0)
   usuarios      usuarios? @relation(fields: [usuario_id], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "usuario_id")
 
   @@index([usuario_id], map: "usuario_id")
 }
 
 model usuarios {
-  id_usuario   Int           @id @default(autoincrement())
-  direccion_id Int?
-  nombre       String?       @db.VarChar(45)
-  apellidoP    String?       @db.VarChar(45)
-  apellidoM    String?       @db.VarChar(45)
-  celular      String?       @db.VarChar(11)
-  correo       String?       @db.VarChar(45)
-  edad         Int?
-  password     String?       @db.VarChar(45)
-  alumnos      alumnos[]
-  profesores   profesores[]
-  sugerencias  sugerencias[]
-  direcciones  direcciones?  @relation(fields: [direccion_id], references: [id_direccion], onDelete: NoAction, onUpdate: NoAction, map: "N_dire")
+  id_usuario       Int           @id @default(autoincrement())
+  direccion_id     Int
+  nombre           String        @db.VarChar(45)
+  apellidoP        String        @db.VarChar(45)
+  apellidoM        String        @db.VarChar(45)
+  celular          String        @db.VarChar(11)
+  correo           String        @unique(map: "correo") @db.VarChar(45)
+  fecha_nacimiento DateTime      @db.Date
+  password         String        @db.VarChar(254)
+  roles_id         Int
+  alumnos          alumnos[]
+  profesores       profesores[]
+  sugerencias      sugerencias[]
+  direcciones      direcciones   @relation(fields: [direccion_id], references: [id_direccion], onDelete: NoAction, onUpdate: NoAction, map: "N_dire")
+  roles            roles         @relation(fields: [roles_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "roles_id")
 
   @@index([direccion_id], map: "N_dire")
+  @@index([roles_id], map: "roles_id_idx")
+}
+
+model horarios {
+  id_horario       Int       @id @default(autoincrement())
+  clase_id         Int?
+  hora             DateTime? @db.Time(0)
+  dia_semana       Int?
+  duracion_minutos Int?
+  cantidad_dias    Int?
+  clases           clases[]
+}
+
+model roles {
+  id         Int        @id @default(autoincrement())
+  nombre_rol String     @db.VarChar(240)
+  usuarios   usuarios[]
 }

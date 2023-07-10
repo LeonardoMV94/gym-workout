@@ -1,0 +1,365 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema workout
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `workout` ;
+
+-- -----------------------------------------------------
+-- Schema workout
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `workout` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish2_ci ;
+USE `workout` ;
+
+-- -----------------------------------------------------
+-- Table `workout`.`regiones`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `workout`.`regiones` (
+  `id_region` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NULL DEFAULT NULL,
+  `ordinal` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_region`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 16
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish2_ci;
+
+
+-- -----------------------------------------------------
+-- Table `workout`.`provincias`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `workout`.`provincias` (
+  `id_provincia` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NULL DEFAULT NULL,
+  `region_id` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_provincia`),
+  INDEX `region_id` (`region_id` ASC) ,
+  CONSTRAINT `region_id`
+    FOREIGN KEY (`region_id`)
+    REFERENCES `workout`.`regiones` (`id_region`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 54
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish2_ci;
+
+
+-- -----------------------------------------------------
+-- Table `workout`.`comunas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `workout`.`comunas` (
+  `id_comuna` INT(11) NOT NULL AUTO_INCREMENT,
+  `comuna` VARCHAR(45) NULL DEFAULT NULL,
+  `provincia_id` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_comuna`),
+  INDEX `provincia_id` (`provincia_id` ASC) ,
+  CONSTRAINT `provincia_id`
+    FOREIGN KEY (`provincia_id`)
+    REFERENCES `workout`.`provincias` (`id_provincia`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 346
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish2_ci;
+
+
+-- -----------------------------------------------------
+-- Table `workout`.`direcciones`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `workout`.`direcciones` (
+  `id_direccion` INT(11) NOT NULL AUTO_INCREMENT,
+  `comuna_id` INT(11) NULL DEFAULT NULL,
+  `calle` VARCHAR(45) NULL DEFAULT NULL,
+  `numero` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_direccion`),
+  INDEX `ciudad_id` (`comuna_id` ASC) ,
+  CONSTRAINT `ciudad_id`
+    FOREIGN KEY (`comuna_id`)
+    REFERENCES `workout`.`comunas` (`id_comuna`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish2_ci;
+
+
+-- -----------------------------------------------------
+-- Table `workout`.`roles`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `workout`.`roles` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre_rol` VARCHAR(240) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `workout`.`usuarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `workout`.`usuarios` (
+  `id_usuario` INT(11) NOT NULL AUTO_INCREMENT,
+  `direccion_id` INT(11) NOT NULL,
+  `nombre` VARCHAR(45) NOT NULL,
+  `apellidoP` VARCHAR(45) NOT NULL,
+  `apellidoM` VARCHAR(45) NOT NULL,
+  `celular` VARCHAR(11) NOT NULL,
+  `correo` VARCHAR(45) NOT NULL,
+  `fecha_nacimiento` DATE NOT NULL,
+  `password` VARCHAR(254) NOT NULL,
+  `roles_id` INT NOT NULL,
+  PRIMARY KEY (`id_usuario`),
+  UNIQUE INDEX `correo` (`correo` ASC) ,
+  INDEX `N_dire` (`direccion_id` ASC) ,
+  INDEX `roles_id_idx` (`roles_id` ASC) ,
+  CONSTRAINT `N_dire`
+    FOREIGN KEY (`direccion_id`)
+    REFERENCES `workout`.`direcciones` (`id_direccion`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `roles_id`
+    FOREIGN KEY (`roles_id`)
+    REFERENCES `workout`.`roles` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 18
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish2_ci;
+
+
+-- -----------------------------------------------------
+-- Table `workout`.`alumnos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `workout`.`alumnos` (
+  `id_alumno` INT(11) NOT NULL AUTO_INCREMENT,
+  `usuario_id` INT(11) NULL DEFAULT NULL,
+  `peso` FLOAT NULL DEFAULT NULL,
+  `altura` FLOAT NULL DEFAULT NULL,
+  `IMC` FLOAT NULL DEFAULT NULL,
+  PRIMARY KEY (`id_alumno`),
+  INDEX `id_usuario` (`usuario_id` ASC) ,
+  CONSTRAINT `id_usuario`
+    FOREIGN KEY (`usuario_id`)
+    REFERENCES `workout`.`usuarios` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish2_ci;
+
+
+-- -----------------------------------------------------
+-- Table `workout`.`profesores`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `workout`.`profesores` (
+  `id_profe` INT(11) NOT NULL AUTO_INCREMENT,
+  `usuario_id` INT(11) NULL DEFAULT NULL,
+  `url_imagen` VARCHAR(240) NOT NULL,
+  PRIMARY KEY (`id_profe`),
+  INDEX `N_usuario` (`usuario_id` ASC) ,
+  CONSTRAINT `N_usuario`
+    FOREIGN KEY (`usuario_id`)
+    REFERENCES `workout`.`usuarios` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish2_ci;
+
+
+-- -----------------------------------------------------
+-- Table `workout`.`salas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `workout`.`salas` (
+  `N_sala` INT(11) NOT NULL AUTO_INCREMENT,
+  `cupo_min` INT(11) NULL DEFAULT NULL,
+  `cupo_max` INT(11) NULL DEFAULT NULL,
+  `numero_sala` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`N_sala`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 6
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish2_ci;
+
+
+-- -----------------------------------------------------
+-- Table `workout`.`nombre_clases`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `workout`.`nombre_clases` (
+  `id_NC` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_NC`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish2_ci;
+
+
+-- -----------------------------------------------------
+-- Table `workout`.`horarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `workout`.`horarios` (
+  `id_horario` INT(11) NOT NULL AUTO_INCREMENT,
+  `clase_id` INT(11) NULL DEFAULT NULL,
+  `hora` TIME NULL DEFAULT NULL,
+  `dia_semana` INT(11) NULL DEFAULT NULL,
+  `duracion_minutos` INT NULL DEFAULT NULL,
+  `cantidad_dias` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_horario`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish2_ci;
+
+
+-- -----------------------------------------------------
+-- Table `workout`.`clases`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `workout`.`clases` (
+  `id_clases` INT(11) NOT NULL AUTO_INCREMENT,
+  `sala_id` INT(11) NULL DEFAULT NULL,
+  `profe_id` INT(11) NULL DEFAULT NULL,
+  `nombre_clase_id` INT(11) NULL DEFAULT NULL,
+  `valor` INT NOT NULL,
+  `descripcion` VARCHAR(350) NOT NULL,
+  `horario_id` INT NOT NULL,
+  `url_imagen` VARCHAR(240) NOT NULL,
+  PRIMARY KEY (`id_clases`),
+  INDEX `N_sala` (`sala_id` ASC) ,
+  INDEX `N_profe` (`profe_id` ASC) ,
+  INDEX `nc_id` (`nombre_clase_id` ASC) ,
+  INDEX `horario_id_idx` (`horario_id` ASC) ,
+  CONSTRAINT `N_profe`
+    FOREIGN KEY (`profe_id`)
+    REFERENCES `workout`.`profesores` (`id_profe`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `N_sala`
+    FOREIGN KEY (`sala_id`)
+    REFERENCES `workout`.`salas` (`N_sala`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `nc_id`
+    FOREIGN KEY (`nombre_clase_id`)
+    REFERENCES `workout`.`nombre_clases` (`id_NC`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `horario_id`
+    FOREIGN KEY (`horario_id`)
+    REFERENCES `workout`.`horarios` (`id_horario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish2_ci;
+
+
+-- -----------------------------------------------------
+-- Table `workout`.`asistencias`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `workout`.`asistencias` (
+  `id_asistencia` INT(11) NOT NULL AUTO_INCREMENT,
+  `clases_id` INT(11) NULL DEFAULT NULL,
+  `alumno_id` INT(11) NULL DEFAULT NULL,
+  `fecha` DATE NULL DEFAULT NULL,
+  `hora` TIME NULL DEFAULT NULL,
+  PRIMARY KEY (`id_asistencia`),
+  INDEX `id_clases` (`clases_id` ASC) ,
+  INDEX `id_alumno` (`alumno_id` ASC) ,
+  CONSTRAINT `id_alumno`
+    FOREIGN KEY (`alumno_id`)
+    REFERENCES `workout`.`alumnos` (`id_alumno`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `id_clases`
+    FOREIGN KEY (`clases_id`)
+    REFERENCES `workout`.`clases` (`id_clases`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish2_ci;
+
+
+-- -----------------------------------------------------
+-- Table `workout`.`inscripciones`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `workout`.`inscripciones` (
+  `id_inscripciones` INT(11) NOT NULL AUTO_INCREMENT,
+  `clases_id` INT(11) NULL DEFAULT NULL,
+  `alumno_id` INT(11) NULL DEFAULT NULL,
+  `fecha_ingreso` DATE NULL DEFAULT NULL,
+  PRIMARY KEY (`id_inscripciones`),
+  INDEX `N_clases` (`clases_id` ASC) ,
+  INDEX `N_alumno` (`alumno_id` ASC) ,
+  CONSTRAINT `N_alumno`
+    FOREIGN KEY (`alumno_id`)
+    REFERENCES `workout`.`alumnos` (`id_alumno`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `N_clases`
+    FOREIGN KEY (`clases_id`)
+    REFERENCES `workout`.`clases` (`id_clases`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish2_ci;
+
+
+-- -----------------------------------------------------
+-- Table `workout`.`pagos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `workout`.`pagos` (
+  `id_pago` INT(11) NOT NULL AUTO_INCREMENT,
+  `incs_id` INT(11) NULL DEFAULT NULL,
+  `alumno_id` INT(11) NULL DEFAULT NULL,
+  `fecha` DATE NULL DEFAULT NULL,
+  `monto` INT(11) NULL DEFAULT NULL,
+  `tipo_pago` VARCHAR(15) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_pago`),
+  INDEX `incs_id` (`incs_id` ASC) ,
+  INDEX `alumno_id` (`alumno_id` ASC) ,
+  CONSTRAINT `alumno_id`
+    FOREIGN KEY (`alumno_id`)
+    REFERENCES `workout`.`alumnos` (`id_alumno`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `incs_id`
+    FOREIGN KEY (`incs_id`)
+    REFERENCES `workout`.`inscripciones` (`id_inscripciones`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish2_ci;
+
+
+-- -----------------------------------------------------
+-- Table `workout`.`sugerencias`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `workout`.`sugerencias` (
+  `id_sugerencia` INT(11) NOT NULL AUTO_INCREMENT,
+  `usuario_id` INT(11) NULL DEFAULT NULL,
+  `comentario` VARCHAR(250) NULL DEFAULT NULL,
+  `fecha` DATE NULL DEFAULT NULL,
+  PRIMARY KEY (`id_sugerencia`),
+  INDEX `usuario_id` (`usuario_id` ASC) ,
+  CONSTRAINT `usuario_id`
+    FOREIGN KEY (`usuario_id`)
+    REFERENCES `workout`.`usuarios` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish2_ci;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

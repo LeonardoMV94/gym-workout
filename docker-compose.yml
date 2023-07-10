@@ -7,7 +7,7 @@ services:
     environment:
       - MYSQL_DATABASE=workout
       - MYSQL_ROOT_USER=root
-      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_ROOT_PASSWORD=toor
       - MYSQL_PORT=3306
     ports:
       - 3306:3306
@@ -19,7 +19,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
-      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_ROOT_PASSWORD=toor
       - PMA_HOST=mysql
     ports:
       - 8080:80
