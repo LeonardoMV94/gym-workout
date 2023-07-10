@@ -57,14 +57,14 @@ const getOneUsuario = async (correo: string, password: string) => {
 }
 //actualiza un ususario
 const updateUsuario = async (id: any, usuario: any) => {
-    const { direccion_id, nombre, apellidoP, apellidoM, celular, correo, edad, password } = usuario
+    const { direccion_id, nombre, apellidoP, apellidoM, celular, correo, fecha_nacimiento, password, roles_id } = usuario
 
     const usuarioActualizado = await prisma.usuarios.update({
         where: {
             id_usuario: id
         },
         data: {
-            direccion_id, nombre, apellidoP, apellidoM, celular, correo, edad, password
+            direccion_id, nombre, apellidoP, apellidoM, celular, correo, fecha_nacimiento , password, roles_id
 
         },
         select: {
@@ -76,14 +76,14 @@ const updateUsuario = async (id: any, usuario: any) => {
 //crea un usuario
 const createUsuario = async ( usuario: any) => {
     // desestructurar el objeto usuario
-    const { nombre, apellidoP, apellidoM, celular, correo, edad, passwordHash, direccion_id } = usuario
+    const { nombre, apellidoP, apellidoM, celular, correo, fecha_nacimiento, passwordHash, direccion_id, roles_id } = usuario
 
     // insertar una direccion y que me retorne el id de direccion creada
     //let direccion_id = 0 // return id here
     // insertar un usuario con el id de direccion  
     const createUser = await prisma.usuarios.create({
         data: {
-            direccion_id, nombre, apellidoP, apellidoM, celular, correo, edad, password: passwordHash
+            direccion_id, nombre, apellidoP, apellidoM, celular, correo, fecha_nacimiento, password: passwordHash, roles_id
         },
         select: {
             id_usuario: true,

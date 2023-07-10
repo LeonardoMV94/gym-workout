@@ -38,10 +38,10 @@ const updateProfesor = async (id:any,profesor:any)=>{
 //crear un profe
 
 const createProfe = async (id:number,profesor:any)=>{
-    const{usuario_id}=profesor
-    const crteProfe =await prisma.profesores.create({
+    const{usuario_id, url_imagen}=profesor
+    const crteProfe = await prisma.profesores.create({
         data:{
-            usuario_id
+            usuario_id, url_imagen
         },
         select: {
             id_profe :true
